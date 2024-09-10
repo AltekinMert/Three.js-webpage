@@ -26,16 +26,19 @@ const torus = new THREE.Mesh(geometry,material);
 
 
 // Global variable to store the loaded object
+
+
+
 let loadedObject = null;
 // Load .mtl and .obj files
 const mtlLoader = new MTLLoader();
-mtlLoader.load('./public/lastry.mtl', (materials) => {
+mtlLoader.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/main/public/lastry.mtl', (materials) => {
   materials.preload();
 
   const objLoader = new OBJLoader();
   objLoader.setMaterials(materials);
   
-  objLoader.load('./public/lastry.obj', (object) => {
+  objLoader.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/main/public/lastry.obj', (object) => {
     loadedObject = object; // Assign the loaded object to the global variable
     loadedObject.scale.set(5,5,5);
     scene.add(loadedObject);
