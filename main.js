@@ -2,6 +2,8 @@ import './style.css'
 
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 
 const scene = new THREE.Scene();
 
@@ -22,8 +24,31 @@ const torus = new THREE.Mesh(geometry,material);
 
 scene.add(torus);
 
-const pointLight = new THREE.PointLight(0xffffff,400);
-pointLight.position.set(10,30,0);
+
+// Global variable to store the loaded object
+let loadedObject = null;
+// Load .mtl and .obj files
+const mtlLoader = new MTLLoader();
+mtlLoader.load('lastry.mtl', (materials) => {
+  materials.preload();
+
+  const objLoader = new OBJLoader();
+  objLoader.setMaterials(materials);
+  
+  objLoader.load('lastry.obj', (object) => {
+    loadedObject = object; // Assign the loaded object to the global variable
+    loadedObject.scale.set(5,5,5);
+    scene.add(loadedObject);
+    loadedObject.position.set(0, 0, 0); // Set the initial position
+  });
+});
+
+
+
+
+
+const pointLight = new THREE.PointLight(0xffffff,100);
+pointLight.position.set(4,0,0);
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight);
@@ -38,9 +63,11 @@ const controls = new OrbitControls(camera , renderer.domElement);
 function animate (){
   requestAnimationFrame( animate );
 
-  torus.rotation.x += 0.01;
+
   torus.rotation.y += 0.005;
-  torus.rotation.z += 0.01;
+  if (loadedObject) {
+    loadedObject.rotation.y += 0.01;  // Rotate the loaded object
+  }
   
   controls.update();
 
