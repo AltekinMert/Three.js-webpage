@@ -50,10 +50,10 @@ const mtlLoader2 = new MTLLoader();
 mtlLoader.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/main/public/byz3.mtl', (materials) => {
   materials.preload();
 
-  const objLoader = new OBJLoader();
-  objLoader.setMaterials(materials);
+  const objLoader2 = new OBJLoader();
+  objLoader2.setMaterials(materials);
   
-  objLoader.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/main/public/byz3.obj', (object) => {
+  objLoader2.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/main/public/byz3.obj', (object) => {
     loadedObject2 = object; // Assign the loaded object to the global variable
     loadedObject2.scale.set(5,5,5);
     scene.add(loadedObject2);
