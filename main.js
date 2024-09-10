@@ -22,20 +22,20 @@ const geometry = new THREE.TorusGeometry(10 ,3 ,16,100);
 const material = new THREE.MeshStandardMaterial({ color : 0xFF6347 });
 const torus = new THREE.Mesh(geometry,material);
 
-scene.add(torus);
+// scene.add(torus);
 
 
 // Global variable to store the loaded object
 let loadedObject = null;
 // Load .mtl and .obj files
 const mtlLoader = new MTLLoader();
-mtlLoader.load('lastry.mtl', (materials) => {
+mtlLoader.load('./models/lastry.mtl', (materials) => {
   materials.preload();
 
   const objLoader = new OBJLoader();
   objLoader.setMaterials(materials);
   
-  objLoader.load('lastry.obj', (object) => {
+  objLoader.load('./models/lastry.obj', (object) => {
     loadedObject = object; // Assign the loaded object to the global variable
     loadedObject.scale.set(5,5,5);
     scene.add(loadedObject);
@@ -51,7 +51,7 @@ const pointLight = new THREE.PointLight(0xffffff,100);
 pointLight.position.set(4,0,0);
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(pointLight);
+scene.add(pointLight, ambientLight);
 
 const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200,50);
