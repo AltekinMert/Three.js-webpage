@@ -85,6 +85,9 @@ function animate (){
   if (loadedObject) {
     loadedObject.rotation.y += 0.01;  // Rotate the loaded object
   }
+  if (loadedObject2) {
+    loadedObject2.rotation.y -= 0.01;  // Rotate the loaded object
+  }
   
   controls.update();
 
