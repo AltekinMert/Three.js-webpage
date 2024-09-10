@@ -30,6 +30,7 @@ const torus = new THREE.Mesh(geometry,material);
 
 
 let loadedObject = null;
+let loadedObject2 = null;
 // Load .mtl and .obj files
 const mtlLoader = new MTLLoader();
 mtlLoader.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/main/public/lastry.mtl', (materials) => {
@@ -45,7 +46,20 @@ mtlLoader.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/m
     loadedObject.position.set(0, 0, 0); // Set the initial position
   });
 });
+const mtlLoader2 = new MTLLoader();
+mtlLoader.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/main/public/byz3.mtl', (materials) => {
+  materials.preload();
 
+  const objLoader = new OBJLoader();
+  objLoader.setMaterials(materials);
+  
+  objLoader.load('https://raw.githubusercontent.com/AltekinMert/Three.js-webpage/main/public/byz3.obj', (object) => {
+    loadedObject2 = object; // Assign the loaded object to the global variable
+    loadedObject2.scale.set(5,5,5);
+    scene.add(loadedObject2);
+    loadedObject2.position.set(4, 0, 0); // Set the initial position
+  });
+});
 
 
 
@@ -54,7 +68,7 @@ const pointLight = new THREE.PointLight(0xffffff,100);
 pointLight.position.set(4,0,0);
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(pointLight, ambientLight);
+scene.add(ambientLight);
 
 const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200,50);
